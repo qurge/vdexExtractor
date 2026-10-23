@@ -1,26 +1,21 @@
 name: Build vdexExtractor
 
-# 发布 Release 需要写权限（新仓库默认只读，会失败）
-permissions:
-  contents: write
-
 on:
   push:
     branches: [ master, main ]
     tags: [ 'v*' ]
   pull_request:
     branches: [ master, main ]
-  workflow_dispatch:        # 允许手动触发
+  workflow_dispatch: 
 
 jobs:
-  # 宿主平台（Linux）原生构建：gcc
   build-native:
     name: Build (gcc)
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v7
 
       - name: Install dependencies (zlib)
         run: |
@@ -29,7 +24,7 @@ jobs:
 
       - name: Build (gcc)
         run: |
-          mkdir -p bin            # src/Makefile 会把产物 cp 到 ../bin，确保目录存在
+          mkdir -p bin         
           chmod +x make.sh
           ./make.sh gcc
 
@@ -39,7 +34,7 @@ jobs:
           ./bin/vdexExtractor -h || true
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v7
         with:
           name: vdexExtractor-gcc-linux-x86_64
           path: |
