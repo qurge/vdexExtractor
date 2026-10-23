@@ -1,4 +1,3 @@
-
 name: Build vdexExtractor
 
 # 发布 Release 需要写权限（新仓库默认只读，会失败）
@@ -21,7 +20,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Install dependencies (zlib)
         run: |
@@ -40,7 +39,7 @@ jobs:
           ./bin/vdexExtractor -h || true
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: vdexExtractor-gcc-linux-x86_64
           path: |
